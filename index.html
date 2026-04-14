@@ -1,13 +1,25 @@
+Ось фінальна, найбільш повна та систематизована версія платформи **MediaLab v2.5**. 
+
+Я об’єднав усі модулі, виправив стилістику під «Dark ERP», інтегрував логіку калькулятора, траблшутера, скриншотера та розширену форму створення кампанії з чекбоксами та ручним налаштуванням ЦА.
+
+### Як працює цей прототип:
+1.  **Навігація:** Всі розділи (Дашборд, Створення, Планувальник, Історія, Скриншотер, Траблшутер) перемикаються без перезавантаження сторінки.
+2.  **Калькулятор (Planner):** Змініть значення в полі "Бюджет" — і таблиця миттєво перерахує покази, охоплення та % від потенціалу аудиторії України.
+3.  **Створення кампанії:** Додано чекбокси вибору API та інтерактивний слайдер віку.
+4.  **AI Траблшутер:** Містить реальний кейс аномалії з рекомендацією щодо вигорання креативу.
+5.  **Скриншотер:** Симулює активний процес сканування з Google Drive.
+
+```html
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediaLab | Multi-Platform Ad Manager</title>
+    <title>MediaLab | Integrated Ad Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .sidebar-link.active { background-color: #1e293b; border-left: 4px solid #3b82f6; color: white; }
         .delta-pos { color: #10b981; }
@@ -15,31 +27,371 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        input[type=range] { accent-color: #2563eb; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-slate-50 text-slate-900 overflow-hidden">
 
-    <aside class="fixed inset-y-0 left-0 w-72 bg-slate-900 text-slate-400 p-4 z-50 flex flex-col custom-scrollbar overflow-y-auto">
-        <div class="flex items-center gap-3 px-2 mb-10">
-            <img src="https://i.ibb.co/bR6VqLxR/2026-04-14-14-25-22.jpg" 
-                 alt="Logo" class="w-12 h-12 rounded-lg border border-slate-700">
-            <div>
-                <h1 class="text-xl font-black text-white tracking-tighter">MediaLab</h1>
-                <p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest">UA System v2.5</p>
+    <div class="flex h-screen">
+        <aside class="w-72 bg-slate-900 text-slate-400 p-4 flex flex-col custom-scrollbar overflow-y-auto shrink-0">
+            <div class="flex items-center gap-3 px-2 mb-10">
+                <img src="https://i.ibb.co/bR6VqLxR/2026-04-14-14-25-22.jpg" 
+                     alt="MediaLab Logo" class="w-12 h-12 rounded-lg border border-slate-700 shadow-2xl">
+                <div>
+                    <h1 class="text-xl font-black text-white tracking-tighter uppercase">MediaLab</h1>
+                    <p class="text-[9px] font-bold text-blue-500 uppercase tracking-widest">UA Platform v2.5</p>
+                </div>
             </div>
-        </div>
 
-        <nav class="space-y-1 flex-1">
-            <p class="text-[10px] uppercase text-slate-600 font-bold px-3 mb-2">Операції</p>
-            <a href="#" onclick="showScreen('dashboard')" class="sidebar-link active flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition">
-                <i class="fas fa-chart-pie w-5"></i> Дашборд (План/Факт)
-            </a>
-            <a href="#" onclick="showScreen('create')" class="sidebar-link flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition">
-                <i class="fas fa-plus-square w-5"></i> Створення кампанії
-            </a>
+            <nav class="space-y-1 flex-1">
+                <p class="text-[10px] uppercase text-slate-600 font-bold px-3 mb-2 tracking-widest">Операційний блок</p>
+                <a href="#" onclick="showScreen('dashboard')" class="sidebar-link active flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition text-sm font-semibold">
+                    <i class="fas fa-chart-pie w-5"></i> Дашборд (План/Факт)
+                </a>
+                <a href="#" onclick="showScreen('create')" class="sidebar-link flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition text-sm font-semibold">
+                    <i class="fas fa-plus-square w-5"></i> Створення кампанії
+                </a>
+                
+                <p class="text-[10px] uppercase text-slate-600 font-bold px-3 mt-8 mb-2 tracking-widest">Стратегія</p>
+                <a href="#" onclick="showScreen('planner')" class="sidebar-link flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition text-sm font-semibold">
+                    <i class="fas fa-calculator w-5"></i> Медіапланувальник
+                </a>
+                <a href="#" onclick="showScreen('history')" class="sidebar-link flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition text-sm font-semibold">
+                    <i class="fas fa-database w-5"></i> База кампаній (History)
+                </a>
+                
+                <p class="text-[10px] uppercase text-slate-600 font-bold px-3 mt-8 mb-2 tracking-widest">Контроль та AI</p>
+                <a href="#" onclick="showScreen('screenshots')" class="sidebar-link flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition text-sm font-semibold">
+                    <i class="fas fa-camera w-5"></i> Скриншотер
+                </a>
+                <a href="#" onclick="showScreen('troubleshooter')" class="sidebar-link flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition text-sm font-semibold">
+                    <i class="fas fa-robot w-5"></i> AI Траблшутер 
+                    <span class="ml-auto bg-red-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-black">2</span>
+                </a>
+            </nav>
+
+            <div class="mt-auto p-3 bg-slate-800/50 rounded-xl border border-slate-800">
+                <p class="text-[9px] font-bold uppercase text-slate-500 mb-2">Активний Рекламодавець</p>
+                <p class="text-xs font-bold text-slate-200">Global Beverage Corp (UA)</p>
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+
+            <section id="screen-dashboard" class="animate-fadeIn">
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter">Моніторинг кампаній</h1>
+                        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Порівняння з медіа-планом (План vs Факт)</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <table class="w-full text-left text-xs font-medium">
+                        <thead class="bg-slate-50 border-b uppercase font-bold text-slate-500">
+                            <tr>
+                                <th class="p-4">Кампанія / Формат</th>
+                                <th class="p-4">Покази (Δ%)</th>
+                                <th class="p-4">CPM (грн)</th>
+                                <th class="p-4">Охоплення (Reach)</th>
+                                <th class="p-4">Частота</th>
+                                <th class="p-4 text-right">Витрати (грн)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-bold text-blue-600 underline italic cursor-pointer">YouTube_InStream_April</td>
+                                <td class="p-4 font-black">1,420,000 <span class="delta-pos ml-1">+4.2%</span></td>
+                                <td class="p-4">92.10 <span class="delta-pos ml-1 text-[10px]">(-3 грн)</span></td>
+                                <td class="p-4">680,000</td>
+                                <td class="p-4 font-bold">2.08</td>
+                                <td class="p-4 text-right font-black">130,782</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-bold text-blue-600 underline italic cursor-pointer">Meta_Feed_Conversions</td>
+                                <td class="p-4 font-black">890,500 <span class="delta-neg ml-1">-12.8%</span></td>
+                                <td class="p-4">138.00 <span class="delta-neg ml-1 text-[10px]">(+14 грн)</span></td>
+                                <td class="p-4">410,000</td>
+                                <td class="p-4 font-bold">2.17</td>
+                                <td class="p-4 text-right font-black">122,889</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="screen-create" class="hidden">
+                <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter mb-8">Запуск нової кампанії</h1>
+                <div class="grid grid-cols-3 gap-8 text-xs font-bold">
+                    <div class="col-span-2 space-y-6">
+                        <div class="bg-white p-6 rounded-xl border shadow-sm">
+                            <h3 class="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest">Документація</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label>Google Sheets (Медіа-план)</label>
+                                    <input type="text" placeholder="https://..." class="w-full p-2 bg-slate-50 border rounded outline-none font-medium">
+                                </div>
+                                <div class="space-y-1">
+                                    <label>Google Drive (Креативи)</label>
+                                    <input type="text" placeholder="https://..." class="w-full p-2 bg-slate-50 border rounded outline-none font-medium">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-xl border shadow-sm">
+                            <h3 class="text-[10px] font-black uppercase text-slate-400 mb-6 tracking-widest">Цільова аудиторія (якщо немає плану)</h3>
+                            <div class="grid grid-cols-2 gap-10">
+                                <div class="space-y-6">
+                                    <div>
+                                        <label class="block mb-3 uppercase tracking-tighter">Вибір статі</label>
+                                        <div class="flex gap-2">
+                                            <button class="flex-1 bg-slate-900 text-white py-2 rounded font-black italic">Чоловіки</button>
+                                            <button class="flex-1 bg-slate-100 text-slate-500 py-2 rounded hover:bg-slate-200">Жінки</button>
+                                            <button class="flex-1 bg-slate-100 text-slate-500 py-2 rounded hover:bg-slate-200">Всі</button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block mb-3 uppercase tracking-tighter">Віковий діапазон: <span id="age-label" class="text-blue-600 font-black italic">18 - 45</span></label>
+                                        <input type="range" min="18" max="65" value="45" class="w-full h-1 bg-slate-200 accent-blue-600 appearance-none rounded" oninput="document.getElementById('age-label').innerText='18 - '+this.value">
+                                    </div>
+                                </div>
+                                <div class="space-y-6">
+                                    <div>
+                                        <label class="block mb-3 uppercase tracking-tighter">Географія (UA)</label>
+                                        <select class="w-full p-2 bg-slate-50 border rounded font-black outline-none appearance-none">
+                                            <option>Вся Україна (Міста 50к+)</option>
+                                            <option>Київ</option>
+                                            <option>Мільйонники</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block mb-3 uppercase tracking-tighter">Інструменти (API)</label>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <label class="flex items-center gap-2 p-2 bg-slate-50 border rounded cursor-pointer hover:bg-blue-50 transition">
+                                                <input type="checkbox" checked class="w-4 h-4 accent-blue-600"> <span class="text-[10px]">YouTube In-Stream</span>
+                                            </label>
+                                            <label class="flex items-center gap-2 p-2 bg-slate-50 border rounded cursor-pointer hover:bg-blue-50 transition">
+                                                <input type="checkbox" checked class="w-4 h-4 accent-blue-600"> <span class="text-[10px]">Meta Feed</span>
+                                            </label>
+                                            <label class="flex items-center gap-2 p-2 bg-slate-50 border rounded cursor-pointer hover:bg-blue-50 transition">
+                                                <input type="checkbox" class="w-4 h-4 accent-blue-600"> <span class="text-[10px]">Google GDN</span>
+                                            </label>
+                                            <label class="flex items-center gap-2 p-2 bg-slate-50 border rounded cursor-pointer hover:bg-blue-50 transition">
+                                                <input type="checkbox" class="w-4 h-4 accent-blue-600"> <span class="text-[10px]">Vidzone Video</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-2xl h-fit border border-slate-800">
+                        <h3 class="text-[10px] font-black uppercase text-slate-500 mb-6 border-b border-slate-800 pb-2 tracking-widest italic">Review & Run</h3>
+                        <div class="space-y-4 mb-10 text-[10px] uppercase font-black">
+                            <div class="flex justify-between"><span>Канали:</span><span class="text-blue-500">2 API Selected</span></div>
+                            <div class="flex justify-between"><span>Скриншотер:</span><span class="text-green-500 italic">Auto-Active</span></div>
+                            <div class="flex justify-between"><span>Моніторинг:</span><span class="text-white">Active</span></div>
+                        </div>
+                        <button class="w-full bg-blue-600 py-4 rounded font-black text-xs uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition shadow-lg shadow-blue-900/40">
+                            ЗАПУСТИТИ КАМПАНІЮ
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-planner" class="hidden">
+                <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter mb-8">Медіапланувальник</h1>
+                
+                <div class="grid grid-cols-4 gap-4 mb-8 text-[11px] font-black uppercase">
+                    <div class="bg-slate-900 p-4 rounded-xl text-white border border-slate-800">
+                        <p class="text-slate-500 mb-1">Total TA Potential</p>
+                        <p class="text-2xl font-black">6,200,000 <span class="text-[9px] text-blue-500">UA Users</span></p>
+                    </div>
+                    <div class="bg-white p-4 border rounded-xl shadow-sm">
+                        <p class="text-slate-400 mb-1">Бюджет (грн)</p>
+                        <input id="plan-budget" type="number" value="300000" class="text-2xl font-black w-full outline-none text-slate-800" oninput="runPlanner()">
+                    </div>
+                    <div class="bg-white p-4 border rounded-xl shadow-sm">
+                        <p class="text-slate-400 mb-1 italic">Общий охват (%)</p>
+                        <p id="total-reach-view" class="text-2xl font-black text-blue-600">38.4%</p>
+                    </div>
+                    <div class="bg-white p-4 border rounded-xl shadow-sm">
+                        <p class="text-slate-400 mb-1">Частота контакту</p>
+                        <p class="text-2xl font-black">2.4</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <table class="w-full text-left text-[11px] font-bold">
+                        <thead class="bg-slate-50 border-b uppercase font-black text-slate-500 tracking-tighter">
+                            <tr>
+                                <th class="p-4">Інструмент / Формат</th>
+                                <th class="p-4">Покази</th>
+                                <th class="p-4">CPM (грн)</th>
+                                <th class="p-4">Охоплення (Reach)</th>
+                                <th class="p-4 text-blue-600">% від Потенціалу</th>
+                                <th class="p-4 text-center">Freq</th>
+                                <th class="p-4 text-right">Бюджет (грн)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="planner-table" class="divide-y divide-slate-100">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="screen-history" class="hidden">
+                <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter mb-8">Архів кампаній (Historical Data)</h1>
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <table class="w-full text-left text-[11px] font-bold">
+                        <thead class="bg-slate-900 text-white uppercase font-black tracking-widest text-[9px]">
+                            <tr>
+                                <th class="p-4">Ніша</th>
+                                <th class="p-4">Період</th>
+                                <th class="p-4">Інструмент</th>
+                                <th class="p-4">ЦА (Гео/Вік/Стать)</th>
+                                <th class="p-4">Avg. CPM</th>
+                                <th class="p-4">Avg. CTR</th>
+                                <th class="p-4 text-right">ROI/ROMI</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[9px] uppercase font-black">E-Commerce</span></td>
+                                <td class="p-4">Q4 2025</td>
+                                <td class="p-4 uppercase text-slate-500 tracking-tighter text-[10px]">YouTube In-Stream (Video)</td>
+                                <td class="p-4 italic text-slate-400 font-medium">Київ / 25-45 / Всі</td>
+                                <td class="p-4 font-black">94.20 грн</td>
+                                <td class="p-4 text-blue-600">1.42%</td>
+                                <td class="p-4 text-right text-green-600 font-black">420%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4"><span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-[9px] uppercase font-black">Retail / FMCG</span></td>
+                                <td class="p-4">Q1 2026</td>
+                                <td class="p-4 uppercase text-slate-500 tracking-tighter text-[10px]">Meta Feed (Static/Video)</td>
+                                <td class="p-4 italic text-slate-400 font-medium">UA 50k+ / 18-35 / Ж</td>
+                                <td class="p-4 font-black">128.50 грн</td>
+                                <td class="p-4 text-blue-600">3.85%</td>
+                                <td class="p-4 text-right text-green-600 font-black">180%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="screen-screenshots" class="hidden">
+                <div class="flex justify-between items-end mb-8">
+                    <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter">Скриншотер розміщень</h1>
+                    <div class="bg-slate-900 text-white p-4 rounded-xl flex items-center gap-4 border border-slate-700 shadow-xl">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></span>
+                            <span class="text-[9px] font-black uppercase tracking-widest italic text-blue-400">Scanning active: Promo_Summer2026</span>
+                        </div>
+                        <div class="h-6 w-[1px] bg-slate-700"></div>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Google Drive UA_Brand_Archive: Connected</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-6">
+                    <div class="bg-white rounded-xl border group cursor-pointer shadow-sm hover:shadow-2xl transition duration-300 overflow-hidden">
+                        <div class="h-44 bg-slate-900 flex items-center justify-center relative">
+                            <i class="fab fa-youtube text-red-600 text-4xl opacity-20 group-hover:opacity-100 transition duration-500"></i>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60"></div>
+                            <div class="absolute bottom-2 left-2 flex gap-1">
+                                <span class="bg-red-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded">YT_IN-STREAM</span>
+                                <span class="bg-white text-slate-900 text-[8px] font-black px-1.5 py-0.5 rounded italic underline">14.04.26</span>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="text-[10px] font-black uppercase text-slate-800 mb-1 tracking-tight italic">Bumper_Video_Ukraine_Main_A1</h4>
+                            <p class="text-[9px] text-slate-400 font-bold tracking-tighter uppercase">Captured on: youtube.com/watch?v=...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-troubleshooter" class="hidden">
+                <h1 class="text-3xl font-black text-slate-800 uppercase tracking-tighter mb-8 italic">AI Troubleshooter <i class="fas fa-wand-magic-sparkles text-blue-600 ml-1"></i></h1>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 border-l-8 border-red-600 rounded-xl shadow-md flex gap-6 items-start transition hover:scale-[1.01]">
+                        <div class="bg-red-50 p-4 rounded text-red-600 shadow-sm"><i class="fas fa-bolt text-2xl"></i></div>
+                        <div class="flex-1">
+                            <div class="flex justify-between font-black uppercase tracking-widest text-[10px] mb-2"><span class="text-red-600 italic">High Priority Alert</span><span class="text-slate-300 italic">Сьогодні, 10:15</span></div>
+                            <h3 class="text-lg font-black italic mb-2 tracking-tight">Перевищення планового CPC на 45% (Meta_Feed_Conversions)</h3>
+                            <p class="text-xs text-slate-500 mb-4 font-bold">План: <span class="text-slate-800 font-black italic">8.50 грн</span> | Факт: <span class="text-red-600 font-black italic">12.30 грн</span>. Зафіксовано різке падіння CTR (з 3.8% до 2.4%).</p>
+                            <div class="bg-blue-50 p-4 rounded border border-blue-100 italic text-[11px] font-semibold text-blue-900 leading-relaxed"><i class="fas fa-brain mr-2 text-blue-500"></i> "Аудиторія 'Київ 25-45' досягла критичної частоти 4.8. Наявний ефект вигорання креативу. Рекомендую змінити візуал або розширити сегмент на Look-alike 3-5% (Target UA)."</div>
+                        </div>
+                        <div class="flex flex-col gap-2 min-w-[150px]">
+                            <button class="bg-slate-900 text-white px-4 py-3 rounded text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition shadow-lg">Виправити</button>
+                            <button class="bg-white border border-slate-200 text-slate-400 px-4 py-3 rounded text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition">Ігнорувати</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        function showScreen(id) {
+            // Hide all
+            ['dashboard','create','planner','history','screenshots','troubleshooter'].forEach(s => {
+                document.getElementById('screen-'+s).classList.add('hidden');
+            });
+            // Show selected
+            document.getElementById('screen-'+id).classList.remove('hidden');
+            // Nav update
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            event.currentTarget.classList.add('active');
             
-            <p class="text-[10px] uppercase text-slate-600 font-bold px-3 mt-6 mb-2">Планування</p>
-            <a href="#" onclick="showScreen('planner')" class="sidebar-link flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition">
-                <i class="fas fa-calculator w-5"></i> Медіапланувальник
-            </a>
-            <a href="#" onclick="
+            if(id === 'planner') runPlanner();
+        }
+
+        function runPlanner() {
+            const budget = document.getElementById('plan-budget').value || 0;
+            const taPotential = 6200000;
+            const table = document.getElementById('planner-table');
+            const totalReachView = document.getElementById('total-reach-view');
+
+            const mix = [
+                { name: 'YouTube In-Stream', share: 0.45, cpm: 92, freq: 2.1 },
+                { name: 'Meta Feed (FB/IG Content)', share: 0.35, cpm: 124, freq: 1.8 },
+                { name: 'Google Display (GDN)', share: 0.12, cpm: 28, freq: 3.2 },
+                { name: 'Vidzone Video UA', share: 0.08, cpm: 98, freq: 2.0 }
+            ];
+
+            let html = '';
+            let reachAggregator = 0;
+
+            mix.forEach(i => {
+                const b = budget * i.share;
+                const imps = (b / i.cpm) * 1000;
+                const reachAbs = imps / i.freq;
+                const percentOfTA = ((reachAbs / taPotential) * 100).toFixed(1);
+                reachAggregator += parseFloat(percentOfTA);
+
+                html += `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-4 font-black uppercase text-slate-800 italic tracking-tight underline cursor-pointer">${i.name}</td>
+                        <td class="p-4 text-slate-500">${Math.floor(imps).toLocaleString()}</td>
+                        <td class="p-4 font-black text-slate-400">${i.cpm.toFixed(2)}</td>
+                        <td class="p-4">${Math.floor(reachAbs).toLocaleString()}</td>
+                        <td class="p-4 text-blue-600 font-black italic text-sm underline">${percentOfTA}%</td>
+                        <td class="p-4 text-center">${i.freq}</td>
+                        <td class="p-4 text-right font-black text-slate-900 italic">${Math.floor(b).toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+
+            table.innerHTML = html;
+            // Pseudo-calc for deduplicated reach
+            totalReachView.innerText = (reachAggregator / mix.length * 1.6).toFixed(1) + '%';
+        }
+
+        // Initialize planner on load logic
+        window.onload = () => { if(!document.getElementById('screen-planner').classList.contains('hidden')) runPlanner(); };
+    </script>
+</body>
+</html>
+```
