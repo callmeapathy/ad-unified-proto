@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdUnified | Единая платформа управления рекламой</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <aside class="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white p-4 z-50">
+        <div class="text-2xl font-bold mb-10 flex items-center gap-2">
+            <i class="fas fa-rocket text-blue-400"></i>
+            <span>AdUnified</span>
+        </div>
+        <nav class="space-y-2">
+            <a href="#" onclick="showScreen('dashboard')" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition bg-slate-800">
+                <i class="fas fa-chart-line w-5"></i> Дашборд
+            </a>
+            <a href="#" onclick="showScreen('create')" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition">
+                <i class="fas fa-plus-circle w-5"></i> Создать кампанию
+            </a>
+            <a href="#" onclick="showScreen('screenshots')" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition">
+                <i class="fas fa-camera w-5"></i> Скриншоты
+            </a>
+            <a href="#" onclick="showScreen('troubleshooter')" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition">
+                <i class="fas fa-robot w-5"></i> AI Траблшутер <span class="bg-red-500 text-[10px] px-1.5 py-0.5 rounded-full ml-auto">2</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="ml-64 p-8">
+
+        <div id="screen-dashboard">
+            <header class="mb-8 flex justify-between items-end">
+                <div>
+                    <h1 class="text-3xl font-bold">Общая аналитика</h1>
+                    <p class="text-gray-500">Рекламодатель: <b>Brand-X Global</b></p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">Meta API: Online</span>
+                    <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium">Google API: Online</span>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-sm text-gray-500 mb-1">Общий расход</p>
+                    <p class="text-2xl font-bold">$12,450.00</p>
+                    <p class="text-green-500 text-xs mt-2"><i class="fas fa-arrow-up"></i> 12% vs прошлый период</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-sm text-gray-500 mb-1">Средний CPC</p>
+                    <p class="text-2xl font-bold">$0.45</p>
+                    <p class="text-red-500 text-xs mt-2"><i class="fas fa-arrow-up"></i> 5% vs прошлый период</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-sm text-gray-500 mb-1">Конверсии (Все)</p>
+                    <p class="text-2xl font-bold">1,204</p>
+                    <p class="text-green-500 text-xs mt-2"><i class="fas fa-arrow-up"></i> 8% vs прошлый период</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-sm text-gray-500 mb-1">ROAS</p>
+                    <p class="text-2xl font-bold">4.2x</p>
+                    <p class="text-gray-400 text-xs mt-2">Стабильно</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 border-b border-gray-100">
+                        <tr>
+                            <th class="p-4 font-semibold text-sm">Кампания</th>
+                            <th class="p-4 font-semibold text-sm">Платформы</th>
+                            <th class="p-4 font-semibold text-sm">Статус</th>
+                            <th class="p-4 font-semibold text-sm">Показы</th>
+                            <th class="p-4 font-semibold text-sm">Расход</th>
+                            <th class="p-4 font-semibold text-sm">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+                            <td class="p-4 font-medium text-blue-600">Summer_Sale_2026</td>
+                            <td class="p-4 flex gap-2 text-gray-400">
+                                <i class="fab fa-facebook text-blue-600"></i>
+                                <i class="fab fa-instagram text-pink-500"></i>
+                                <i class="fab fa-google text-red-500"></i>
+                            </td>
+                            <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">Активна</span></td>
+                            <td class="p-4">1,240,500</td>
+                            <td class="p-4">$4,500</td>
+                            <td class="p-4"><button class="text-gray-400 hover:text-gray-600"><i class="fas fa-ellipsis-v"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="screen-create" class="hidden max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold mb-6">Создать единую кампанию</h1>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200">
+                
+                <div class="mb-8">
+                    <label class="block text-sm font-bold mb-4 uppercase text-gray-500 tracking-wider">Выбор площадок</label>
+                    <div class="grid grid-cols-4 gap-4">
+                        <label class="border-2 border-blue-500 p-4 rounded-xl cursor-pointer bg-blue-50 flex flex-col items-center">
+                            <input type="checkbox" checked class="hidden">
+                            <i class="fab fa-meta text-2xl text-blue-600 mb-2"></i>
+                            <span class="text-sm font-bold">Meta Ads</span>
+                        </label>
+                        <label class="border-2 border-gray-100 p-4 rounded-xl cursor-pointer hover:border-blue-300 flex flex-col items-center">
+                            <input type="checkbox" class="hidden">
+                            <i class="fab fa-youtube text-2xl text-red-600 mb-2"></i>
+                            <span class="text-sm font-bold">YouTube</span>
+                        </label>
+                        <label class="border-2 border-gray-100 p-4 rounded-xl cursor-pointer hover:border-blue-300 flex flex-col items-center">
+                            <input type="checkbox" class="hidden">
+                            <i class="fab fa-google text-2xl text-yellow-500 mb-2"></i>
+                            <span class="text-sm font-bold">Google GDN</span>
+                        </label>
+                        <div class="border-2 border-dashed border-gray-200 p-4 rounded-xl flex flex-col items-center justify-center text-gray-400">
+                            <i class="fas fa-plus text-xl mb-1"></i>
+                            <span class="text-[10px]">Добавить API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Название кампании</label>
+                        <input type="text" placeholder="Введите название..." class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Гео-таргетинг</label>
+                        <input type="text" value="Казахстан: Алматы, Астана" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Возраст</label>
+                        <div class="flex gap-4">
+                            <input type="number" value="25" class="w-full p-3 border rounded-lg">
+                            <input type="number" value="54" class="w-full p-3 border rounded-lg">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Бюджет (Total)</label>
+                        <input type="number" placeholder="$ 0.00" class="w-full p-3 border rounded-lg">
+                    </div>
+                </div>
+
+                <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-100 flex gap-4 mb-8">
+                    <i class="fas fa-info-circle text-yellow-600 mt-1"></i>
+                    <p class="text-sm text-yellow-800 italic">Система автоматически адаптирует настройки возраста 25-54 для Google Ads (диапазоны 25-34, 35-44, 45-54) и Meta API.</p>
+                </div>
+
+                <button class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                    ЗАПУСТИТЬ ВО ВСЕХ КАБИНЕТАХ
+                </button>
+            </div>
+        </div>
+
+        <div id="screen-screenshots" class="hidden">
+            <h1 class="text-3xl font-bold mb-6">Архив размещений (Google Drive)</h1>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border">
+                    <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+                        <i class="fas fa-image text-4xl"></i>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-sm mb-1">YouTube_Pre-roll_Main</h3>
+                        <p class="text-xs text-gray-500">Захвачено: 12.04.2026, 14:20</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-[10px] bg-red-100 text-red-600 px-2 py-0.5 rounded font-bold">YouTube</span>
+                            <a href="#" class="text-blue-600 text-xs font-bold uppercase"><i class="fas fa-external-link-alt"></i> Диск</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-troubleshooter" class="hidden">
+            <h1 class="text-3xl font-bold mb-6 italic">AI Troubleshooter <i class="fas fa-wand-magic-sparkles text-blue-500"></i></h1>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-6 rounded-xl border-l-4 border-red-500 shadow-sm flex gap-6 items-start">
+                    <div class="bg-red-50 p-4 rounded-full text-red-500">
+                        <i class="fas fa-exclamation-triangle text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between">
+                            <h3 class="font-bold text-lg mb-1 italic">Аномальный рост стоимости клика</h3>
+                            <span class="text-xs text-gray-400">2 часа назад</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">В кампании <span class="font-mono bg-gray-100 px-1">Summer_Sale_2026</span> на платформе <b>Meta</b> зафиксирован рост CPC на 42% выше базового уровня за последние 24 часа.</p>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm font-bold mb-2 uppercase tracking-tighter text-blue-600 underline">Рекомендация AI:</p>
+                            <p class="text-sm text-gray-700 italic font-medium">"Частота показов (Frequency) достигла 4.2. Наблюдается эффект 'выгорания' креатива. Рекомендуется обновить баннеры или расширить аудиторию, включив Look-alike 3-5%."</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="bg-slate-900 text-white px-4 py-2 rounded text-xs font-bold">ОК, ИЗМЕНЮ ВРУЧНУЮ</button>
+                        <button class="bg-gray-100 text-gray-500 px-4 py-2 rounded text-xs font-bold underline">ИГНОРИРОВАТЬ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            ['dashboard', 'create', 'screenshots', 'troubleshooter'].forEach(id => {
+                document.getElementById('screen-' + id).classList.add('hidden');
+            });
+            // Show selected
+            document.getElementById('screen-' + screenId).classList.remove('hidden');
+
+            // Update sidebar styles
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('bg-slate-800');
+                if(link.innerText.toLowerCase().includes(screenId === 'create' ? 'создать' : 
+                                                         screenId === 'screenshots' ? 'скриншот' : 
+                                                         screenId === 'troubleshooter' ? 'ai' : 'дашборд')) {
+                    link.classList.add('bg-slate-800');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
