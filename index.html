@@ -299,8 +299,73 @@
         </div>
 
         <div id="screen-screenshots" class="hidden"><h1>Архів скріншотів (Google Drive integration mock)</h1></div>
-        <div id="screen-troubleshooter" class="hidden"><h1>AI Траблшутер (Monitoring mock)</h1></div>
+        <div id="screen-troubleshooter" class="hidden animate-fadeIn">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-black italic tracking-tighter uppercase">
+            AI Monitoring Agent <i class="fas fa-robot text-blue-600 ml-2"></i>
+        </h1>
+        <div class="flex gap-2">
+            <span class="flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-xl text-xs font-bold animate-pulse">
+                <span class="w-2 h-2 bg-red-600 rounded-full"></span> 2 КРИТИЧНІ АНОМАЛІЇ
+            </span>
+        </div>
+    </div>
 
+    <div class="flex gap-4 mb-6">
+        <button class="bg-slate-900 text-white px-4 py-2 rounded-lg text-xs font-bold">Усі алерти (5)</button>
+        <button class="bg-white border px-4 py-2 rounded-lg text-xs font-bold text-slate-500 hover:bg-slate-50">Бюджет</button>
+        <button class="bg-white border px-4 py-2 rounded-lg text-xs font-bold text-slate-500 hover:bg-slate-50">KPI / CPC</button>
+        <button class="bg-white border px-4 py-2 rounded-lg text-xs font-bold text-slate-500 hover:bg-slate-50">Модерація</button>
+    </div>
+
+    <div class="space-y-6">
+        <div class="bg-white p-6 rounded-2xl border-l-8 border-red-500 shadow-xl flex gap-6 items-start transition hover:scale-[1.01]">
+            <div class="bg-red-50 p-4 rounded-2xl text-red-600">
+                <i class="fas fa-chart-line text-2xl"></i>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="text-[10px] font-black bg-red-100 text-red-700 px-2 py-1 rounded uppercase tracking-widest">High Risk</span>
+                        <h3 class="font-black text-xl mt-2">Перевищення планового CPC на 45%</h3>
+                    </div>
+                    <span class="text-xs text-slate-400 font-medium">Сьогодні, 10:15</span>
+                </div>
+                <p class="text-slate-600 mb-4 text-sm leading-relaxed">
+                    Кампанія <span class="font-bold text-slate-900">Promo_April_Vidzone</span> показує стрімке зростання вартості кліка. 
+                    План: <span class="font-bold">8.50 грн</span> | Факт: <span class="font-bold text-red-600">12.30 грн</span>.
+                </p>
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 flex gap-4">
+                    <i class="fas fa-lightbulb text-blue-600 mt-1"></i>
+                    <div>
+                        <p class="text-sm font-bold text-blue-900 uppercase text-[11px]">Аналіз AI Агента:</p>
+                        <p class="text-sm text-blue-800 italic">
+                            "Зростання CPC корелює з низьким CTR (0.4%). Причина: Висока частота (4.8) на сегмент 'Київ 25-34'. 
+                            Аудиторія вигоріла. Рекомендую змінити креатив або перерозподілити 20% бюджету на YouTube Bumper для охоплення нової аудиторії."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2 min-w-[180px]">
+                <button class="bg-slate-900 text-white px-4 py-3 rounded-xl text-[11px] font-black uppercase hover:bg-blue-700 transition">Застосувати зміни</button>
+                <button class="bg-white border border-slate-200 text-slate-500 px-4 py-3 rounded-xl text-[11px] font-black uppercase hover:bg-slate-50 transition text-center">Ігнорувати</button>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border-l-8 border-yellow-500 shadow-md flex gap-6 items-start opacity-90 hover:opacity-100 transition">
+            <div class="bg-yellow-50 p-4 rounded-2xl text-yellow-600">
+                <i class="fas fa-clock text-2xl"></i>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="text-[10px] font-black bg-yellow-100 text-yellow-700 px-2 py-1 rounded uppercase tracking-widest">Medium Risk</span>
+                        <h3 class="font-black text-xl mt-2">Ризик недовитрати бюджету (Pacing)</h3>
+                    </div>
+                    <span class="text-xs text-slate-400 font-medium">Вчора, 18:40</span>
+                </div>
+                <p class="text-slate-600 mb-4 text-sm leading-relaxed">
+                    Кампанія <span class="font-bold text-slate-900">
     </main>
 
     <script>
